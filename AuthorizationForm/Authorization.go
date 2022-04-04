@@ -6,8 +6,24 @@ import (
 	"net/http"
 )
 
+type Users struct {
+	Login    string
+	Password string
+}
+
 func Authorization(w http.ResponseWriter, r *http.Request) {
-	html, err := template.ParseFiles("./AuthorizationForm/index.html")
+
+	//Запоминаем данные для пользователя
+	/*
+	user := Users{
+		Login:    r.FormValue("login"),
+		Password: r.FormValue("password"),
+	}
+	*////
+
+	//Подключаем html
+	html, err := template.ParseFiles("./form/index.html")
+
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Eror Server: read file html", 500)
@@ -19,5 +35,6 @@ func Authorization(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Eror Server: read file html", 500)
 		return
 	}
+	///
 
 }
