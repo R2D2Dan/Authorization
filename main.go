@@ -1,7 +1,7 @@
 package main
 
 import (
-	form "Authorization/AuthorizationForm"
+	form "Authorization/Forms"
 	"log"
 	"net/http"
 )
@@ -13,12 +13,13 @@ func main() {
 func start() {
 
 	servmux := http.NewServeMux()
-	servmux.HandleFunc("/Authorization", form.Authorization)
-	servmux.HandleFunc("/User", form.UserAuthorization)
+	//Форма авторизации
+	servmux.HandleFunc("/", form.Authorization)
+	servmux.HandleFunc("/User", form.User)
 
 	//Обработчик файлов(стилей)
-	fileserver := http.FileServer(http.Dir("./form/"))
-	servmux.Handle("/form/", http.StripPrefix("/form/", fileserver))
+	fileserver := http.FileServer(http.Dir("./templates/"))
+	servmux.Handle("/templates/", http.StripPrefix("/templates/", fileserver))
 
 	log.Println("Start Server")
 	err := http.ListenAndServe(":8081", servmux)

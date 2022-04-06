@@ -1,40 +1,15 @@
-package authorizationform
+package www
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 )
 
-type User struct {
-	Login    string
-	Password string
-}
-type Data struct {
-	DataBaseName string
-	Users        []User
-}
-
-//Тип база
-func DB() Data {
-	DataDB := Data{
-		DataBaseName: "mssql: User",
-		Users: []User{
-			User{Login: "R2D2Dan", Password: "qwerty1"},
-			User{Login: "ArtLebedev", Password: "YaKryt3000"},
-			User{Login: "Vasya2020", Password: "test"},
-			User{Login: "test@test.com", Password: "test"},
-		},
-	}
-	return DataDB
-
-}
-
 func Authorization(w http.ResponseWriter, r *http.Request) {
 
 	//Подключаем html
-	html, err := template.ParseFiles("./form/index.html")
+	html, err := template.ParseFiles("./templates/AuthForm/Auth.html")
 
 	if err != nil {
 		log.Println(err)
@@ -48,10 +23,9 @@ func Authorization(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	///
-
 }
 
+/*
 func UserAuthorization(w http.ResponseWriter, r *http.Request) {
 
 	user := r.FormValue("user")
@@ -81,3 +55,4 @@ func UserAuthorization(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+*/
