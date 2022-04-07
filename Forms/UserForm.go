@@ -2,34 +2,34 @@ package www
 
 import (
 	database "Authorization/DataBase"
+	"fmt"
 	"log"
 	"net/http"
 )
 
 func User(w http.ResponseWriter, r *http.Request) {
 
-	user := r.FormValue("user")
+	login := r.FormValue("user")
 	pass := r.FormValue("pass")
 
-	if user == "" && pass == "" {
+	if login == "" && pass == "" {
 		log.Println("Нет данных")
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
-	if func(u, p string, db database.Data) bool {
-		for _, k := range db.Users {
-			if k.Login == u && k.Password == p {
-				return true
-			}
-		}
-		return false
-	}(user, pass, database.DB()) {
-		log.Println("Пользователь найден")
-	} else {
+	id_clinet, user, ok := database.IsClient(login, pass)
+
+	if !ok {
+
 		log.Println("Пользователь не найден")
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
+	} else {
+		log.Println(id_clinet)
+		log.Println(user)
+		log.Println("Пользователь найден")
 	}
+	w.Write([]byte(fmt.Sprintf("%s", user.User[id_clinet]["Login"])))
 
 }
