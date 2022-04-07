@@ -85,7 +85,7 @@ func IsClient(u, p string) (int, *Users, bool) {
 		login, oklg := k.User[i+1]["Login"]
 		pass, okps := k.User[i+1]["Password"]
 
-		if !oklg || !okps {
+		if !oklg && !okps {
 			log.Println("Ключ не найден")
 			return 0, &db[0], false
 		}
