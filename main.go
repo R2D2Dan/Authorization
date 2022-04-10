@@ -23,7 +23,7 @@ func start() {
 	servmux.Handle("/templates/", http.StripPrefix("/templates/", fileserver))
 
 	log.Println("Start Server")
-	err := http.ListenAndServe(":8081", servmux)
+	err := http.ListenAndServe(":8080", servmux)
 	if err != nil {
 		log.Println("error server:", err)
 	}
